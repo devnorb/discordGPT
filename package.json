@@ -1,0 +1,29 @@
+{
+  "name": "discordgpt",
+  "version": "1.0.0",
+  "description": "Implement ChatGPT into your discord bot project!",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/norbsdev0/discordGPT"
+  },
+  "keywords": [
+    "discord",
+    "gpt",
+    "openai",
+    "discordgpt",
+    "chatgpt",
+    "discordjs",
+    "discordbot",
+    "discord.js",
+    "chatbot"
+  ],
+  "author": "norbsdev",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^18.0.6",
+    "colors": "^1.4.0",
+    "node-fetch": "^3.2.6",
+    "openai": "^3.2.1",
+    "prettier": "^2.8.4"
+  }
+}
