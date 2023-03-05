@@ -1,5 +1,8 @@
 # DiscordGPT
 
+![img](https://img.shields.io/codacy/grade/333027d39cce490e83ac03cf5f0f1e9d?style=for-the-badge&logo=codacy)
+![npm](https://img.shields.io/npm/v/discordgpt?style=for-the-badge)
+
 ## About
 
 This project is based on the power of [OpenAI](https://beta.openai.com)'s Chat-GPT functionality, a state-of-the-art language model that has been trained on a massive amount of text data.
