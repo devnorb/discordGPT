@@ -7,7 +7,9 @@ class discordGPT {
   }
 
   async generateText(message) {
-    if (typeof options.textAccuracy !== "string") {
+    if (!options.textAccuracy || options.textAccuracy == null) {
+      options.textAccuracy = "1";
+    } else if (typeof options.textAccuracy !== "string") {
       throw new TypeError(
         "[discordGPT]: options.textAccuracy should be type String!"
       );
@@ -19,32 +21,29 @@ class discordGPT {
       const configuration = new Configuration({
         apiKey: this.apiKey,
       });
+
       try {
         const openai = new OpenAIApi(configuration);
+
+        const completion = await openai.createChatCompletion({
+          model: "gpt-3.5-turbo",
+          temperature: options.textAccuracy,
+          messages: [
+            {
+              role: "user",
+              content: message,
+            },
+          ],
+        });
+
+        return completion.data.choices[0].message.content;
       } catch (e) {
         if (e.response.status == 401) {
-          function APIError(errorMsg) {
-            this.name = "APIError";
-            this.message = errorMsg;
-          }
-          throw new APIError(`[discordGPT]: The API key provided is invalid!`);
+          throw new Error(`[discordGPT]: The API key provided is invalid!`);
         } else {
-          throw new APIError(
-            `[discordGPT]: An error occurred. \n Details: ` + e
-          );
+          throw new Error(`[discordGPT]: An error occurred. \n Details: ` + e);
         }
       }
-      const completion = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        temperature: this.options.textAccuracy,
-        messages: [
-          {
-            role: "user",
-            content: message,
-          },
-        ],
-      });
-      return completion.data.choices[0].message.content;
     }
   }
 }
