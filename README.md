@@ -28,13 +28,15 @@ const { Client } = require("discord.js");
 const secret = require("../config.json");
 const client = new Client({ intents: [] });
 
-const prompt = "";
+const prompt = ""; // Prompt to ask the AI
 
 const AI = new discordGPT({
-      apiKey: secret
+  apiKey: secret, // Your OpenAI API key
+  textAccuracy: "", // Between 0 to 2
 });
 
-AI.generateText("prompt");
+const results = AI.generateText("prompt"); //generateText function.
+console.log(results);
 ```
 
 Note that the generateText() function only accepts string type.
@@ -65,17 +67,18 @@ module.exports = {
         .setRequired(true)
     ),
   async execute(client, interaction) {
-   const prompt = interaction.options.getString("prompt");
+    const prompt = interaction.options.getString("prompt");
 
-    const a = new discordGPT({
-      apiKey: secret
+    const AI = new discordGPT({
+      apiKey: secret,
+      textAccuracy: "0.8",
     });
-    
+
     try {
-      const text = await a.generateText(prompt);
+      const text = await AI.generateText(prompt);
 
       await interaction.deferReply();
-      await wait(1000);
+      await wait(3000);
       await interaction.editReply({ content: text });
     } catch (e) {
       console.log(e);
@@ -86,5 +89,5 @@ module.exports = {
 
 ## Planned addons
 
-Modifiers of AI response text (temperature, presence_penalty, frequency_penalty) \
+(Partially done) Modifiers of AI response text (temperature, presence_penalty, frequency_penalty) \
 OpenAI's image API
