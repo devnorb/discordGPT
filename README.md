@@ -23,11 +23,8 @@ DiscordGPT can implement AI features into your Discord bot by just a few simple 
 3. Implement this example code:
 
 ```javascript
-const { discordGPT } = require("discordgpt");
-const { Client } = require("discord.js");
+const discordGPT = require("discordgpt");
 const secret = require("../config.json");
-const client = new Client({ intents: [] });
-
 const prompt = ""; // Prompt to ask the AI
 
 const AI = new discordGPT({
