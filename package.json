@@ -1,10 +1,13 @@
 {
   "name": "discordgpt",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Implement ChatGPT into your discord bot project!",
   "repository": {
     "type": "git",
     "url": "https://github.com/norbsdev0/discordGPT"
+  },
+  "scripts": {
+    "format": "npx prettier --write *"
   },
   "keywords": [
     "discord",
@@ -24,5 +27,6 @@
     "colors": "^1.4.0",
     "node-fetch": "^3.2.6",
     "openai": "^3.2.1",
-  },
+    "prettier": "^2.8.4"
+  }
 }
