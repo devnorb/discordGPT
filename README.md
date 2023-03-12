@@ -106,11 +106,11 @@ module.exports = {
     });
 
     try {
-      const text = await AI.generateText(prompt);
-
       await interaction.deferReply();
       await wait(3000);
-      await interaction.editReply({ content: text });
+      const text = await AI.generateText(prompt);
+      await interaction.editReply({ content: "Please wait..." });
+      await interaction.followUp({ content: text });
     } catch (e) {
       console.log(e);
     }
