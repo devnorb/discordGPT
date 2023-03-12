@@ -1,4 +1,4 @@
 export interface discordGPTOptions {
-  textAccuracy: string; 
-  apiKey: string;
+  textAccuracy: string;
+  apiKey: string ;
 }
