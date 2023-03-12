@@ -1,6 +1,5 @@
 # DiscordGPT
 
-![img](https://img.shields.io/codacy/grade/333027d39cce490e83ac03cf5f0f1e9d?style=for-the-badge&logo=codacy)
 ![npm](https://img.shields.io/npm/v/discordgpt?style=for-the-badge)
 
 ## About
@@ -87,6 +86,7 @@ textGeneration();
 const { SlashCommandBuilder } = require("discord.js");
 const { discordGPT } = require("discordgpt");
 const secret = require("../config.json");
+const wait = require("node:timers/promises").setTimeout;
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("ask-gpt")
@@ -108,8 +108,8 @@ module.exports = {
     try {
       await interaction.deferReply();
       await wait(3000);
-      const text = await AI.generateText(prompt);
       await interaction.editReply({ content: "Please wait..." });
+      const text = await AI.generateText(prompt);
       await interaction.followUp({ content: text });
     } catch (e) {
       console.log(e);
