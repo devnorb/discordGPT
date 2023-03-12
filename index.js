@@ -56,5 +56,5 @@ class discordGPT {
     }
   }
 }
-s
+
 module.exports = discordGPT;
