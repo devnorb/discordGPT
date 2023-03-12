@@ -2,32 +2,41 @@ const { Configuration, OpenAIApi } = require("openai");
 
 class discordGPT {
   constructor(options) {
+    this.options = options;
     this.textAccuracy = options.textAccuracy;
     this.apiKey = options.apiKey;
   }
 
   async generateText(message) {
-    if (!options.textAccuracy || options.textAccuracy == null) {
-      options.textAccuracy = "1";
-    } else if (typeof options.textAccuracy !== "string") {
+    const textAccuracy = this.options.textAccuracy;
+    const textAccuracyNumber = Number(this.options.textAccuracy);
+    if (typeof textAccuracy !== "string") {
       throw new TypeError(
         "[discordGPT]: options.textAccuracy should be type String!"
       );
-    } else if (options.textAccuracy > 2 || options.textAccuracy < 0) {
+    } else if (
+      !textAccuracy ||
+      isNaN(textAccuracy) ||
+      textAccuracyNumber > 2 ||
+      textAccuracyNumber < 0
+    ) {
       throw new RangeError(
-        "[discordGPT]: options.textAccuracy should be less than or equal to 0 and more than or equal to 2!"
+        "[discordGPT]: options.textAccuracy should be more than or equal to 0 and less than or equal to 2!"
       );
+    } else if (!message) {
+      throw new Error("[discordGPT]: The prompt should contain a string!");
     } else {
       const configuration = new Configuration({
-        apiKey: this.apiKey,
+        apiKey: this.options.apiKey,
       });
 
       try {
+        const temp = Number(textAccuracy);
         const openai = new OpenAIApi(configuration);
 
         const completion = await openai.createChatCompletion({
           model: "gpt-3.5-turbo",
-          temperature: options.textAccuracy,
+          temperature: temp,
           messages: [
             {
               role: "user",
