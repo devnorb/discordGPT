@@ -13,6 +13,8 @@ This project is based on the power of [OpenAI](https://beta.openai.com)'s Chat-G
 $ npm install discordgpt
 ```
 
+Warning: While this package is specifically developed to work with discord.js v14, there is no assurance that it will be compatible with either discord.js v13 or v12.
+
 ## Usage
 
 DiscordGPT can implement AI features into your Discord bot by just a few simple steps.
@@ -20,25 +22,14 @@ DiscordGPT can implement AI features into your Discord bot by just a few simple 
 1. Create an OpenAI API key [here](https://beta.openai.com/account/api-keys) if you do not have an api key.
 
 2. Install [discordGPT](#discordGPT-Installation)
-3. Implement this example code:
 
-```javascript
-const discordGPT = require("discordgpt");
-const secret = require("../config.json");
-const prompt = ""; // Prompt to ask the AI
+3. Implement code (refer to [Examples](#examples)):
 
-const AI = new discordGPT({
-  apiKey: secret, // Your OpenAI API key
-  textAccuracy: "", // Between 0 to 2
-});
-
-const results = AI.generateText("prompt"); //generateText function.
-console.log(results);
-```
-
-Note that the generateText() function only accepts string type.
+### When using the generateText() function, it will only accept a string type as input and this input must include an "await" keyword.
 
 4. Make an config.json (or an .env file) and put your OpenAI API key there.
+
+### config.json
 
 ```bash
 {
@@ -46,13 +37,56 @@ Note that the generateText() function only accepts string type.
 }
 ```
 
-5. Finally, you can place that in a discord bot command.
+Your main file should look like this:
 
-Example:
+```js
+const secret = require("../config.json");
+const textGeneration = async () => {
+  const prompt = ""; // Prompt to ask the AI
+
+  const AI = new discordGPT({
+    apiKey: secret, // Your OpenAI API key
+    textAccuracy: "0.7", // Between 0 to 2
+  });
+
+  const text = await AI.generateText(prompt);
+  console.log(text);
+};
+textGeneration();
+```
+
+### .env (needs package dotenv installed)
+
+```bash
+SECRET="API_KEY_HERE"
+```
+
+Main File (Place at the top of your file)
+
+```js
+require("dotenv").config();
+const textGeneration = async () => {
+  const prompt = ""; // Prompt to ask the AI
+
+  const AI = new discordGPT({
+    apiKey: process.env.SECRET, // Your OpenAI API key
+    textAccuracy: "0.7", // Between 0 to 2
+  });
+
+  const text = await AI.generateText(prompt);
+  console.log(text);
+};
+textGeneration();
+```
+
+5. Run the project and you are done!
+
+## Examples:
 
 ```js
 const { SlashCommandBuilder } = require("discord.js");
 const { discordGPT } = require("discordgpt");
+const secret = require("../config.json");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("ask-gpt")
