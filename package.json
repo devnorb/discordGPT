@@ -4,7 +4,12 @@
   "description": "Implement ChatGPT into your discord bot project!",
   "repository": {
     "type": "git",
-    "url": "https://github.com/norbsdev0/discordGPT"
+    "url": "git+https://github.com/norbsdev0/discordGPT.git"
+  },
+  "license": "MIT",
+  "engines": {
+     "node": ">=16.0.0",
+     "discord.js": ">=14.0.0"
   },
   "keywords": [
     "discord",
