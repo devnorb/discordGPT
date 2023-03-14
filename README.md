@@ -1,6 +1,33 @@
 # DiscordGPT
 
-![npm](https://img.shields.io/npm/v/discordgpt?style=for-the-badge)
+![npm](https://www.npmjs.com/package/discordgpt)
+![img](https://img.shields.io/snyk/vulnerabilities/github/norbsdev0/discordGPT?style=for-the-badge)
+
+## The Image API has been released!
+
+```js
+const discordGPT = require("discordGPT");
+const secret = require("../config.json");
+const imageGeneration = async () => {
+  const prompt = ""; // Prompt for the AI to generate an image
+
+  const imageAI = new discordGPT({
+    apiKey: secret, // Your OpenAI API key
+    imageSize: "medium", // Small, Medium, or Large
+  });
+
+  const imageAPI = await imageAI.generateImage(prompt);
+  console.log(imageAPI);
+};
+try {
+  imageGeneration();
+} catch (e) {
+  console.log(e);
+}
+```
+
+Note that the generateImage returns a string (a link) and does not return a buffer or an attachment.
+The imageAPI is also ratelimited (50 images a minute)
 
 ## About
 
@@ -12,7 +39,7 @@ This project is based on the power of [OpenAI](https://beta.openai.com)'s Chat-G
 $ npm install discordgpt
 ```
 
-Warning: While this package is specifically developed to work with discord.js v14, there is no assurance that it will be compatible with either discord.js v13 or v12.
+Warning: While this package is specifically developed to work with discord.js v14, there is no assurance that it will be compatible with either discord.js v12 or v13.
 
 ## Usage
 
@@ -24,7 +51,7 @@ DiscordGPT can implement AI features into your Discord bot by just a few simple 
 
 3. Implement code (refer to [Examples](#examples)):
 
-### When using the generateText() function, it will only accept a string type as input and this input must include an "await" keyword.
+### When using the generateText() function, it will only accept a string type as input and this input must include the "await" keyword.
 
 4. Make an config.json (or an .env file) and put your OpenAI API key there.
 
@@ -36,10 +63,12 @@ DiscordGPT can implement AI features into your Discord bot by just a few simple 
 }
 ```
 
-Your main file should look like this:
+Your main file should look like this (For the textAPI):
 
 ```js
+const discordGPT = require("discordGPT");
 const secret = require("../config.json");
+
 const textGeneration = async () => {
   const prompt = ""; // Prompt to ask the AI
 
@@ -48,10 +77,14 @@ const textGeneration = async () => {
     textAccuracy: "0.7", // Between 0 to 2
   });
 
-  const text = await AI.generateText(prompt);
-  console.log(text);
+  const textAPI = await AI.generateText(prompt);
+  console.log(textAPI);
 };
-textGeneration();
+try {
+  textGeneration();
+} catch (e) {
+  console.log(e);
+}
 ```
 
 ### .env (needs package dotenv installed)
@@ -64,6 +97,8 @@ Main File (Place at the top of your file)
 
 ```js
 require("dotenv").config();
+const discordGPT = require("discordGPT");
+
 const textGeneration = async () => {
   const prompt = ""; // Prompt to ask the AI
 
@@ -82,14 +117,16 @@ textGeneration();
 
 ## Examples:
 
+TextAPI
+
 ```js
 const { SlashCommandBuilder } = require("discord.js");
-const { discordGPT } = require("discordgpt");
+const discordGPT = require("discordgpt");
 const secret = require("../config.json");
 const wait = require("node:timers/promises").setTimeout;
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("ask-gpt")
+    .setName("askGpt")
     .setDescription("Generate a AI response!")
     .addStringOption((option) =>
       option
@@ -118,7 +155,45 @@ module.exports = {
 };
 ```
 
+ImageAPI
+
+```js
+const { SlashCommandBuilder } = require("discord.js");
+const discordGPT = require("discordgpt");
+const secret = require("../config.json");
+const wait = require("node:timers/promises").setTimeout;
+module.exports = {
+  data: new SlashCommandBuilder()
+    .setName("generateImage")
+    .setDescription("Generate a image using AI!")
+    .addStringOption((option) =>
+      option
+        .setName("prompt")
+        .setDescription("What the image should look like")
+        .setRequired(true)
+    ),
+  async execute(client, interaction) {
+    const prompt = interaction.options.getString("prompt");
+
+    const AI = new discordGPT({
+      apiKey: secret,
+      imageSize: "medium",
+    });
+
+    try {
+      await interaction.deferReply();
+      await wait(3000);
+      await interaction.editReply({ content: "Please wait..." });
+      const image = await AI.generateImage(prompt);
+      await interaction.followUp({ content: image });
+    } catch (e) {
+      console.log(e);
+    }
+  },
+};
+```
+
 ## Planned addons
 
 (Partially done) Modifiers of AI response text (temperature, presence_penalty, frequency_penalty) \
-OpenAI's image API
+Discord Webhooks for imageAPI?
