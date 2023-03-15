@@ -1,7 +1,12 @@
-# DiscordGPT
+# DiscordGPT v1.1.1
 
-![npm](https://www.npmjs.com/package/discordgpt)
-![img](https://img.shields.io/snyk/vulnerabilities/github/norbsdev0/discordGPT?style=for-the-badge)
+![npm](https://img.shields.io/npm/v/discordgpt?style=for-the-badge)
+![img](https://img.shields.io/snyk/vulnerabilities/npm/discordgpt?style=for-the-badge)
+
+## Changelog
+
+- Fixed a quick vulnerability patch for 1.1.0
+- Fixed the shields.io badges bugging out
 
 ## The Image API has been released!
 
