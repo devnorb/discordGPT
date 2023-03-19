@@ -121,4 +121,3 @@ class discordGPT {
 }
 
 module.exports = discordGPT;
-a
