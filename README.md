@@ -1,17 +1,17 @@
-# DiscordGPT v1.1.2
+# DiscordGPT v1.1.3
 
 ![npm](https://img.shields.io/npm/v/discordgpt?style=for-the-badge)
 ![img](https://img.shields.io/snyk/vulnerabilities/npm/discordgpt?style=for-the-badge)
 
 ## Changelog
 
-- Fixed the module not found error
+- Fixed some documentation errors
 
 ## The Image API has been released!
 
 ```js
 const discordGPT = require("discordGPT");
-const secret = require("../config.json");
+const { secret } = require("../config.json");
 const imageGeneration = async () => {
   const prompt = ""; // Prompt for the AI to generate an image
 
@@ -71,7 +71,7 @@ Your main file should look like this (For the textAPI):
 
 ```js
 const discordGPT = require("discordGPT");
-const secret = require("../config.json");
+const { secret } = require("../config.json");
 
 const textGeneration = async () => {
   const prompt = ""; // Prompt to ask the AI
@@ -126,11 +126,11 @@ TextAPI
 ```js
 const { SlashCommandBuilder } = require("discord.js");
 const discordGPT = require("discordgpt");
-const secret = require("../config.json");
+const { secret } = require("../config.json");
 const wait = require("node:timers/promises").setTimeout;
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("askGpt")
+    .setName("ask-gpt")
     .setDescription("Generate a AI response!")
     .addStringOption((option) =>
       option
@@ -164,11 +164,11 @@ ImageAPI
 ```js
 const { SlashCommandBuilder } = require("discord.js");
 const discordGPT = require("discordgpt");
-const secret = require("../config.json");
+const { secret } = require("../config.json");
 const wait = require("node:timers/promises").setTimeout;
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("generateImage")
+    .setName("generate-image")
     .setDescription("Generate a image using AI!")
     .addStringOption((option) =>
       option
